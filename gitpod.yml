@@ -1,0 +1,22 @@
+tasks:
+  - name: Install & Start VPS
+    init: |
+      sudo apt update
+      sudo apt install -y docker.io docker-compose curl
+      sudo systemctl enable --now docker
+
+      # Install Pterodactyl Panel
+      bash install-pterodactyl.sh
+ports:
+  - port: 80
+    protocol: http
+    description: Pterodactyl Panel
+    visibility: public
+  - port: 443
+    protocol: http
+    description: Secure Pterodactyl Panel (SSL)
+    visibility: public
+  - port: 22
+    protocol: tcp
+    description: SSH Access
+    visibility: public
