@@ -1,0 +1,16 @@
+tasks:
+  - name: Install & Start SSH Server
+    init: |
+      sudo apt update
+      sudo apt install -y openssh-server
+      sudo mkdir /var/run/sshd
+      echo 'root:gitpod' | sudo chpasswd
+      sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+      sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+      sudo service ssh start
+      echo "Server is ready! Use SSH command to connect."
+ports:
+  - port: 22
+    protocol: tcp
+    description: SSH Access
+    visibility: public
